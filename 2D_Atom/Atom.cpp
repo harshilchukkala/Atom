@@ -67,8 +67,6 @@ void Atom::draw() {
             float ex = x + e.orbitRadius * cos(rad);
             float ey = y + e.orbitRadius * sin(rad);
             DrawCircle((int)ex,(int)ey,8,SKYBLUE);
-            DrawText("e-",ex - MeasureText("e-",16)/2,ey-8,16,PURPLE);
-            
         }
     }
 }

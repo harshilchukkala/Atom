@@ -29,3 +29,5 @@ class Atom{
     void update(float dt);
     void draw();
 };
+
+Atom createatom(float x,float y,int Atomicnum);

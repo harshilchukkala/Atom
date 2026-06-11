@@ -1,8 +1,31 @@
 #include "Atom.h"
 #include <cmath>
-using namespace std;
 
-Atom::Atom(float x,float y,string symbol,Color color,float nucleusradius) {
+const AtomData Elements[] = {
+    {"H",  {1}},
+    {"He", {2}},
+    {"Li", {2,1}},
+    {"Be", {2,2}},
+    {"B",  {2,3}},
+    {"C",  {2,4}},
+    {"N",  {2,5}},
+    {"O",  {2,6}},
+    {"F",  {2,7}},
+    {"Ne", {2,8}},
+    {"Na", {2,8,1}},
+    {"Mg", {2,8,2}},
+    {"Al", {2,8,3}},
+    {"Si", {2,8,4}},
+    {"P",  {2,8,5}},
+    {"S",  {2,8,6}},
+    {"Cl", {2,8,7}},
+    {"Ar", {2,8,8}},
+    {"K",  {2,8,8,1}},
+    {"Ca", {2,8,8,2}}
+};
+
+
+Atom::Atom(float x,float y,std::string symbol,Color color,float nucleusradius) {
     this->x=x;
     this->y=y;
     this->symbol=symbol;
@@ -51,141 +74,11 @@ void Atom::draw() {
 }
 
 Atom createatom(float x,float y,int Atomicnum) {
-    switch (Atomicnum)
-    {
-    case 1: {
-        Atom a(x,y,"H",WHITE,30);
-        a.addshell(120,1);
-        return a;
+    Atom newatom(x,y,Elements[Atomicnum-1].symbol,WHITE,30);
+    float radius=120;
+    for(int count : Elements[Atomicnum-1].shellse) {
+        newatom.addshell(radius,count);
+        radius += 40;
     }
-    case 2: {
-        Atom a(x,y,"He",WHITE,30);
-        a.addshell(120,2);
-        return a;
-    }
-    case 3: {
-        Atom a(x,y,"Li",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,1);
-        return a;
-    }
-    case 4: {
-        Atom a(x,y,"Be",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,2);
-        return a;
-    }
-    case 5: {
-        Atom a(x,y,"B",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,3);
-        return a;
-    }
-    case 6: {
-        Atom a(x,y,"C",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,4);
-        return a;
-    }
-    case 7: {
-        Atom a(x,y,"N",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,5);
-        return a;
-    }
-    case 8: {
-        Atom a(x,y,"O",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,6);
-        return a;
-    }
-    case 9: {
-        Atom a(x,y,"F",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,7);
-        return a;
-    }
-    case 10: {
-        Atom a(x,y,"Ne",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        return a;
-    }
-    case 11: {
-        Atom a(x,y,"Na",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,1);
-        return a;
-    }
-    case 12: {
-        Atom a(x,y,"Mg",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,2);
-        return a;
-    }
-    case 13: {
-        Atom a(x,y,"Al",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,3);
-        return a;
-    }
-    case 14: {
-        Atom a(x,y,"Si",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,4);
-        return a;
-    }
-    case 15: {
-        Atom a(x,y,"P",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,5);
-        return a;
-    }
-    case 16: {
-        Atom a(x,y,"S",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,6);
-        return a;
-    }
-    case 17: {
-        Atom a(x,y,"Cl",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,7);
-        return a;
-    }
-    case 18: {
-        Atom a(x,y,"Ar",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,8);
-        return a;
-    }
-    case 19: {
-        Atom a(x,y,"K",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,8);
-        a.addshell(240,1);
-        return a;
-    }
-    case 20: {
-        Atom a(x,y,"Ca",WHITE,30);
-        a.addshell(120,2);
-        a.addshell(160,8);
-        a.addshell(200,8);
-        a.addshell(240,2);
-        return a;
-    }
-    default: {
-        Atom a(x,y,"",WHITE,0);
-        return a;
-    }
-    }
+    return newatom;
 }

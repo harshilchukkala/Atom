@@ -30,4 +30,9 @@ class Atom{
     void draw();
 };
 
+struct AtomData {
+    std::string symbol;
+    std::vector<int> shellse;
+};
+
 Atom createatom(float x,float y,int Atomicnum);

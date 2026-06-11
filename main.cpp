@@ -1,19 +1,26 @@
 #include <raylib.h>
 #include"Atom.h"
+#include <vector>
 #include <cmath>
 
 int main() {
     InitWindow(800, 600, "Quantum Atom");
     SetTargetFPS(60);
 
-    Atom Hydrogen(400,300,"H",WHITE,50);
-    Hydrogen.addshell(120,1);
+    std::vector<Atom> Atoms; 
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
-        Hydrogen.draw();
-        Hydrogen.update(GetFrameTime());
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            Vector2 mouse=GetMousePosition();
+            Atoms.push_back(Atom(mouse.x,mouse.y,"H",WHITE,30));
+            Atoms.back().addshell(120,1);
+        }
+        for(int i=0;i<Atoms.size();i++) {
+            Atoms.at(i).draw();
+            Atoms.at(i).update(GetFrameTime());
+        }
         EndDrawing();
     }
 

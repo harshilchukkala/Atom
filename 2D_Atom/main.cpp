@@ -19,7 +19,7 @@ int main() {
                 input.push_back((char)'0'+(key-KEY_ZERO));
             }
         }
-        if(IsKeyPressed(KEY_ENTER)) {
+        if(IsKeyPressed(KEY_ENTER) && input.size()!=0) {
             selectedelement=std::stoi(input);
             input="";
         }

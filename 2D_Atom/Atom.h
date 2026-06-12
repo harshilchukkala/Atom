@@ -27,7 +27,7 @@ class Atom{
     Atom(float x,float y,std::string symbol,Color color,float nucleusradius);
     void addshell(float radius,int Electroncount);
     void update(float dt);
-    void draw();
+    void draw(float scale,Vector2 offset);
 };
 
 struct AtomData {

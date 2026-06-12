@@ -5,15 +5,24 @@
 
 int main() {
     InitWindow(800, 600, "Quantum Atom");
+    ToggleFullscreen();
     SetTargetFPS(60);
 
     std::vector<Atom> Atoms;
     std::string input = "";
     int selectedelement = 0;
+    Vector2 offset = {0,0};
+    float scale = 1.0f;
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
+        scale += GetMouseWheelMove() * 0.1f;
+        if(IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
+            Vector2 delta = GetMouseDelta();
+            offset.x += delta.x;
+            offset.y += delta.y;
+        }
         for(int key = KEY_ZERO;key <= KEY_NINE;key++) {
             if(IsKeyPressed(key)) {
                 input.push_back((char)'0'+(key-KEY_ZERO));
@@ -29,7 +38,7 @@ int main() {
             selectedelement=0;
         }
         for(int i=0;i<Atoms.size();i++) {
-            Atoms.at(i).draw();
+            Atoms.at(i).draw(scale,offset);
             Atoms.at(i).update(GetFrameTime());
         }
         EndDrawing();

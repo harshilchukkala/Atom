@@ -57,16 +57,19 @@ void Atom::update(float dt) {
     }
 }
 
-void Atom::draw() {
-    DrawCircle((int)x,(int)y,nucleusradius,nucleuscolor);
-    DrawText(symbol.c_str(),x-MeasureText(symbol.c_str(),nucleusradius)/2,y-nucleusradius/2,nucleusradius,BLACK);
+void Atom::draw(float scale,Vector2 offset) {
+    float dx = (x - GetScreenWidth()/2) * scale + GetScreenWidth()/2 + offset.x;
+    float dy = (y - GetScreenHeight()/2) * scale + GetScreenHeight()/2 + offset.y;
+    float dnucleusradius = nucleusradius * scale;
+    DrawCircle((int)dx,(int)dy,dnucleusradius,nucleuscolor);
+    DrawText(symbol.c_str(),dx-MeasureText(symbol.c_str(),dnucleusradius)/2,dy-dnucleusradius/2,dnucleusradius,BLACK);
     for(auto& shell : shells) {
-        DrawCircleLines((int)x,(int)y,shell.radius,RAYWHITE);
+        DrawCircleLines((int)dx,(int)dy,shell.radius*scale,RAYWHITE);
         for(auto& e : shell.Electrons) {
             float rad = e.angle * DEG2RAD;
-            float ex = x + e.orbitRadius * cos(rad);
-            float ey = y + e.orbitRadius * sin(rad);
-            DrawCircle((int)ex,(int)ey,8,SKYBLUE);
+            float ex = dx + e.orbitRadius * scale * cos(rad);
+            float ey = dy + e.orbitRadius * scale * sin(rad);
+            DrawCircle((int)ex,(int)ey,8*scale,SKYBLUE);
         }
     }
 }

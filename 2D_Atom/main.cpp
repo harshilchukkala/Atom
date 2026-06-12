@@ -31,7 +31,7 @@ int main() {
         }
         if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && selectedelement!=0) {
             Vector2 mouse=GetMousePosition();
-            Atoms.push_back(createatom(mouse.x,mouse.y,selectedelement));
+            Atoms.push_back(createatom(mouse.x - offset.x,mouse.y - offset.y,selectedelement));
             selectedelement=0;
         }
         for(int i=0;i<Atoms.size();i++) {

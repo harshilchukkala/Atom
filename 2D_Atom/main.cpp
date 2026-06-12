@@ -4,7 +4,7 @@
 #include <string>
 
 int main() {
-    InitWindow(800, 600, "Quantum Atom");
+    InitWindow(800, 600, "2D Bohr Atom");
     SetTargetFPS(60);
 
     std::vector<Atom> Atoms;

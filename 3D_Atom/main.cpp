@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <math.h>
+#include <vector>
 
 int main() {
     InitWindow(800,600,"3D Quantum Atom");
@@ -16,6 +17,14 @@ int main() {
     float Pitch = 0.3f;
     float Dist = 20.0f;
 
+    std::vector<Vector3> points;
+    for(int i=0;i<10000;i++) {
+        float x,y,z,r = 5;
+        x = GetRandomValue(-r,r);
+        y = GetRandomValue(-r,r);
+        z = GetRandomValue(-r,r);
+        points.push_back({x,y,z});
+    }
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -37,6 +46,10 @@ int main() {
         DrawLine3D({0,0,-1000}, {0,0,1000}, BLUE);      
         DrawSphere({0,0,0},0.5f,WHITE);
         
+        for(int i = 0; i < 10000;i++)
+        { 
+            DrawPoint3D(points.at(i),SKYBLUE);
+        }
         EndMode3D();
         EndDrawing();
     }

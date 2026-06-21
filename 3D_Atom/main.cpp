@@ -12,16 +12,31 @@ int main() {
     camera.fovy = 45.0f;
     camera.projection =CAMERA_PERSPECTIVE;
 
+    float Yaw = 0;
+    float Pitch = 0.3f;
+    float Dist = 20.0f;
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
+
+        float dist = GetMouseWheelMove();
+        Dist += dist * 5 ;
+
+        if(IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
+            Vector2 change = GetMouseDelta();
+            Pitch += change.y * 0.005f;
+            Yaw += change.x * -0.005f;
+        }
+
+        camera.position = {Dist * cos(Pitch) * sin(Yaw),Dist * sin(Pitch),Dist * cos(Pitch) * cos(Yaw)};
 
         BeginMode3D(camera);
         DrawLine3D({-1000,0,0}, {1000,0,0}, RED);   
         DrawLine3D({0,-1000,0}, {0,1000,0}, GREEN); 
         DrawLine3D({0,0,-1000}, {0,0,1000}, BLUE);      
         DrawSphere({0,0,0},0.5f,WHITE);
-
+        
         EndMode3D();
         EndDrawing();
     }

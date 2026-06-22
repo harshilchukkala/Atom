@@ -9,7 +9,29 @@ Vector3 SphericaltoCartisian(float r,float theta,float phi) {
     return {x,y,z};
 }
 
+Vector3 Getpoint(int n,int l,int m) {
+    while(1) {
+        float r = 25 * GetRandomValue(0,100) / 100.0f;
+        float theta = 2 * M_PI * GetRandomValue(0,100) / 100.0f;
+        float phi = 2 * M_PI * GetRandomValue(0,100) / 100.0f;
+
+        float p = (1.0f/M_PI) * exp(-2*r);
+        float num = GetRandomValue(0,100) / 100.0f;
+
+        if(num < p * 50) {
+            Vector3 point = SphericaltoCartisian(r,theta,phi);
+            return point;
+        }
+    }
+}
+
 int main() {
+
+    int NO_OF_POINTS = 100000;
+    int n = 1;
+    int l = 0;
+    int m = 0;
+
     InitWindow(800,600,"3D Quantum Atom");
     SetTargetFPS(60);
 
@@ -19,19 +41,16 @@ int main() {
     camera.up = {0,1,0};
     camera.fovy = 45.0f;
     camera.projection =CAMERA_PERSPECTIVE;
-
     float camYaw = 0;
     float camPitch = 0.3f;
     float camDist = 20.0f;
 
     std::vector<Vector3> points;
-    for(int i = 0 ; i < 10000 ; i++) {
-        float r = 10 * GetRandomValue(0,100) / 100.0f;
-        float theta = 2 * M_PI * GetRandomValue(0,100) / 100.0f;
-        float phi = 2 * M_PI * GetRandomValue(0,100) / 100.0f;
-        Vector3 point = SphericaltoCartisian(r,theta,phi);
+    for(int i = 0 ; i < NO_OF_POINTS ; i++) {
+        Vector3 point = Getpoint(n,l,m);
         points.push_back(point);
     }
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -41,8 +60,8 @@ int main() {
 
         if(IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) {
             Vector2 change = GetMouseDelta();
-            camPitch += change.y * 0.005f;
-            camYaw += change.x * -0.005f;
+            camPitch += change.y * 0.01f;
+            camYaw += change.x * -0.01f;
         }
 
         camera.position = {camDist * cos(camPitch) * sin(camYaw),camDist * sin(camPitch),camDist * cos(camPitch) * cos(camYaw)};
@@ -54,7 +73,7 @@ int main() {
         
         EndMode3D();
 
-        for(int i = 0; i < 10000 ; i++)
+        for(int i = 0; i < NO_OF_POINTS ; i++)
         {
             DrawPixelV(GetWorldToScreen(points.at(i),camera),SKYBLUE);
         }

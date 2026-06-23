@@ -54,7 +54,7 @@ Vector3 Getpoint(int n,int l,int m,float rad) {
         float p = R(n,l,r)*R(n,l,r)*Y(l,m,theta,phi)*Y(l,m,theta,phi);
         float num = GetRandomValue(0,1000) / 1000.0f;
 
-        if(num < p * 2) {
+        if(num < p * 100000) {
             Vector3 point = SphericaltoCartisian(r,theta,phi);
             return point;
         }
@@ -64,8 +64,8 @@ Vector3 Getpoint(int n,int l,int m,float rad) {
 int main() {
 
     int NO_OF_POINTS = 100000;
-    int n = 2;
-    int l = 1;
+    int n = 3;
+    int l = 2;
     int m = 1;
     float rad = 50;
 
